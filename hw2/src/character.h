@@ -1,16 +1,18 @@
-#ifndef MYGL_H
-#define MYGL_H
+#ifndef Character_H
+#define Character_H
 
 #include <glwidget277.h>
 #include <utils.h>
 #include <shaderprogram.h>
-#include <scene/cube.h>
+#include <scene/cylinder.h>
+#include <scene/sphere.h>
+
 
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
 
 
-class MyGL
+class Character
     : public GLWidget277
 {
 private:
@@ -23,8 +25,8 @@ private:
     ShaderProgram prog_wire;
 
 public:
-    explicit MyGL(QWidget *parent = 0);
-    ~MyGL();
+    explicit Character(QWidget *parent = 0);
+    ~Character();
 
     void initializeGL();
     void resizeGL(int w, int h);
@@ -35,4 +37,4 @@ protected:
 };
 
 
-#endif // MYGL_H
+#endif // Character_H

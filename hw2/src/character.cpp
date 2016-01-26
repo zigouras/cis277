@@ -1,4 +1,4 @@
-#include "mygl.h"
+#include "Character.h"
 #include <la.h>
 
 #include <iostream>
@@ -6,20 +6,21 @@
 #include <QKeyEvent>
 
 
-MyGL::MyGL(QWidget *parent)
+Character::Character(QWidget *parent)
     : GLWidget277(parent)
 {
 }
 
-MyGL::~MyGL()
+Character::~Character()
 {
     makeCurrent();
 
     vao.destroy();
-    geom_cube.destroy();
+    torso.destroy();
+    head.destroy();
 }
 
-void MyGL::initializeGL()
+void Character::initializeGL()
 {
     // Create an OpenGL context
     initializeOpenGLFunctions();
@@ -43,8 +44,8 @@ void MyGL::initializeGL()
     vao.create();
 
     //Create the example cube
-    geom_cube.setColor(glm::vec4(1,0,0,1));
-    geom_cube.create();
+//    geom_cube.setColor(glm::vec4(1,0,0,1));
+//    geom_cube.create();
 
     // Create and set up the diffuse shader
     prog_lambert.create(":/glsl/lambert.vert.glsl", ":/glsl/lambert.frag.glsl");
@@ -56,7 +57,7 @@ void MyGL::initializeGL()
     vao.bind();
 }
 
-void MyGL::resizeGL(int w, int h)
+void Character::resizeGL(int w, int h)
 {
     //This code sets the concatenated view and perspective projection matrices used for
     //our scene's camera view.
@@ -83,7 +84,7 @@ void MyGL::resizeGL(int w, int h)
 
 //This function is called by Qt any time your GL window is supposed to update
 //For example, when the function updateGL is called, paintGL is called implicitly.
-void MyGL::paintGL()
+void Character::paintGL()
 {
     // Clear the screen so that we only see newly drawn images
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -102,8 +103,8 @@ void MyGL::paintGL()
     //We've rotated it -45 degrees on the Z axis, then translated it to the point <2,2,0>
     model = glm::translate(glm::mat4(1.0f), glm::vec3(2,2,0)) * glm::rotate(glm::mat4(1.0f), -45.0f, glm::vec3(0,0,1));
     prog_lambert.setModelMatrix(model);
-    geom_cube.setColor(glm::vec4(1,0,0,1));//Set its color to red
-    prog_lambert.draw(*this, geom_cube);
+    //geom_cube.setColor(glm::vec4(1,0,0,1));//Set its color to red
+    //prog_lambert.draw(*this, geom_cube);
 
 #endif
 
@@ -113,7 +114,7 @@ void MyGL::paintGL()
     //Here is a good spot to call your scene graph traversal function.
 }
 
-void MyGL::keyPressEvent(QKeyEvent *e)
+void Character::keyPressEvent(QKeyEvent *e)
 {
     // http://doc.qt.io/qt-5/qt.html#Key-enum
     if (e->key() == Qt::Key_Escape) {

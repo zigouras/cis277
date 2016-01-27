@@ -43,7 +43,7 @@ void MyGL::initializeGL()
     vao.create();
 
     //Create the example cube
-    geom_cube.setColor(glm::vec4(1,0,0,1));
+    geom_cube.setColor(glm::vec4(0,0,0,1));
     geom_cube.create();
 
     // Create and set up the diffuse shader
@@ -95,12 +95,17 @@ void MyGL::paintGL()
     //Note that we have to transpose the model matrix before passing it to the shader
     //This is because OpenGL expects column-major matrices, but you've
     //implemented row-major matrices.
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-2,0,0)) * glm::scale(glm::mat4(1.0f), glm::vec3(3,3,3));
+    glm::mat4 model =
+            //glm::translate(glm::mat4(1.0f), glm::vec3(-2,0,0)) *
+            glm::rotate(glm::mat4(1.0f), 20.0f, glm::vec3(1,0,0)) *
+            //glm::rotate(glm::mat4(1.0f), 20.0f, glm::vec3(1,0,0)) *
+            glm::scale(glm::mat4(1.0f), glm::vec3(3,3,3));
 
 
     //Now do the same to render the cube
     //We've rotated it -45 degrees on the Z axis, then translated it to the point <2,2,0>
-    model = glm::translate(glm::mat4(1.0f), glm::vec3(2,2,0)) * glm::rotate(glm::mat4(1.0f), -45.0f, glm::vec3(0,0,1));
+    //model = glm::rotate(glm::mat4(1.0f), 45.0f, glm::vec3(3,3,3)) * glm::scale(glm::mat4(1.0f),glm::vec3(3,3,3));
+
     prog_lambert.setModelMatrix(model);
     geom_cube.setColor(glm::vec4(1,0,0,1));//Set its color to red
     prog_lambert.draw(*this, geom_cube);

@@ -14,8 +14,7 @@ SOURCES += \
     $$PWD/scene/geometry.cpp \
     $$PWD/scene/node.cpp \
     $$PWD/scene/cube.cpp \
-    $$PWD/character.cpp \
-    $$PWD/scene/limb.cpp
+    $$PWD/character.cpp
 
 HEADERS += \
     $$PWD/la.h \
@@ -29,5 +28,4 @@ HEADERS += \
     $$PWD/scene/geometry.h \
     $$PWD/scene/node.h \
     $$PWD/scene/cube.h \
-    $$PWD/character.h \
-    $$PWD/scene/limb.h
+    $$PWD/character.h

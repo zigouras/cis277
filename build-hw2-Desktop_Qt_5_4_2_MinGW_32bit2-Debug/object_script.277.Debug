@@ -12,7 +12,6 @@ INPUT(
 ./debug\node.o
 ./debug\cube.o
 ./debug\character.o
-./debug\limb.o
 ./debug\qrc_glsl.o
 ./debug\moc_mainwindow.o
 ./debug\moc_glwidget277.o

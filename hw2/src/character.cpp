@@ -16,8 +16,8 @@ Character::~Character()
     makeCurrent();
 
     vao.destroy();
-    torso.destroy();
-    head.destroy();
+    //torso.destroy();
+    //head.destroy();
 }
 
 void Character::initializeGL()

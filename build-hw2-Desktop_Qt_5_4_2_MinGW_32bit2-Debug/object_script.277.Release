@@ -12,7 +12,6 @@ INPUT(
 ./release\node.o
 ./release\cube.o
 ./release\character.o
-./release\limb.o
 ./release\qrc_glsl.o
 ./release\moc_mainwindow.o
 ./release\moc_glwidget277.o

@@ -4,8 +4,7 @@
 #include <glwidget277.h>
 #include <utils.h>
 #include <shaderprogram.h>
-#include <scene/cylinder.h>
-#include <scene/sphere.h>
+#include <scene/node.h>
 
 
 #include <QOpenGLVertexArrayObject>
@@ -18,8 +17,7 @@ class Character
 private:
     QOpenGLVertexArrayObject vao;
 
-    Cylinder torso;
-    Sphere head;
+    Node body;
 
     ShaderProgram prog_lambert;
     ShaderProgram prog_wire;
@@ -31,7 +29,7 @@ public:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
-
+    void initBody();
 protected:
     void keyPressEvent(QKeyEvent *e);
 };

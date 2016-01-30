@@ -1,24 +1,34 @@
-Nico Zigouras CIS 277 Spring 2016 HW 1 Jan 30, 2016
+Nico Zigouras
+CIS 277 Spring 2016
+HW 1
+Jan 30, 2016
 
-See the comments in character.cpp line 144-122 on how to 
- 3.2 Polygon primitive: Cube (20 points)
 
-Your scene graph should be able to render transformed cubes, transformed cylinders, and transformed spheres. We have provided the code to build and render cylinders and spheres, but it's up to you to implement cube building, uploading, and rendering. A polygon stores the color with which it should be rendered. Refer to the Cylinder and Sphere classes for how you might choose to go about constructing your cube class.
-3.3 Character (30 points)
+3.2 Polygon primitive: Cube
+See scene/cube.cpp.  The head of the character uses the cube I created.
 
-Create and render a scene graph that uses primitives to form a creature. The code creating your creature should be easy to read and modify so we can easily adjust your graph's transformations when testing it. The creature has to have the following parts:
+3.3 Character
 
-    Body/Torso: Where everything originates. When the body moves/rotates/scales, so should everything else.
-    Head that pivots at its base.
-    At least four limbs: Each limb should be broken into two parts (upper and lower) and should pivot at their joints, not at their centers. In other words, the puppet's limbs should not break apart when the lower segments are rotated. The lower limb portion should inherit the transformations of the upper limb portion.
-    For all of the above, clearly label with comments where code can be changed to move body parts.
+The main program will render the character.
 
-3.4 Documentation (10 points)
+See the Character class for setting up and rendering the Character.  The SceneGraphTraverseAndDraw class handles the recursive transformation of a scene.
 
-In a text file, explain to a naive user of your code how to interact with the classes you wrote for your scene graph and shapes. Most importantly, make sure to tell the user where they should alter your code to manipulate your creature. Finally, explain any difficulties/bugs you experienced. You should also keep a help log as you work on this assignment to document what issues you had and how you resolved them (TA help, peer help, internet help, etc.). See the course web site's OH/Help Log page for more information. Your documentation should also include answers to the questions listed in the following section.
-3.5 Conceptual Questions (20 points)
+3.4 Documentation
 
-    (5 pts) In the provided Node class, what would be the benefit to using initialization lists in its constructors instead of their current implementation?
-    (4 pts) The provided Node constructors set any pointer member variables to NULL by default. These constructors should be setting these pointers to nullptr; why is this?
-    (5 pts) Aside from syntax, is there a difference in using a reference versus using a pointer? If so, what is the difference?
-    (6 pts) Below are two different accessor functions implemented for a four-dimensional vector class. They are used to get the floating point number stored at a particular index in the vector. Note the different return types of these functions as well as their const-ness. 
+See the Character::initBody method where you can manipulate the transformation of any body part.
+
+I found it difficult to transform the scene more than once in a program execution and have it work.  I altered Node to store the transformation but I still had trouble.  I think the relative transformations to the parent need to be stored in the Node once and kept unchanged, e.g. the head's relative sx is always 2; it is always twice the size of the body in the x direction.  With the current implementation of Node, the coordinates change each time you transform it so you lose the initial relative transformation to its parent.  So it works if you transform it once but if you transform it again it is broken.
+
+For help on matrix multiplication and determinants I used:
+http://www.intmath.com/matrices-determinants/matrix-determinant-intro.php
+
+
+Questions:
+
+1.  Then you could specify only a subset of the transformation coordinates and fall back on the defaults for the rest rather than having to specify all or none.
+
+2.  You could get a null pointer exception.
+
+3.  A pointer is variable that holds the address of an object.  A reference similarly indirectly addresses an object and can be thought of as an alias to an object.  Pointers can be reassigned while references cannot.  If one variable is a reference to another, and you change the value of the reference, the value of the variable will change.  If you have a pointer to a variable and you reassign it and set the value of the pointer to something else, the original value will not change.  Java objects are like C++ pointers.
+
+4.  The first example is used for operator overloading of the [] operator in the vec4 class and ensures that the contents of the vector are not changed during the function call.  The second must be used during method chaining so you can do something to the value that is returned in the second method in the chain.

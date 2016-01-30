@@ -97,7 +97,7 @@ void MyGL::paintGL()
     //implemented row-major matrices.
     glm::mat4 model =
             //glm::translate(glm::mat4(1.0f), glm::vec3(-2,0,0)) *
-            glm::rotate(glm::mat4(1.0f), 20.0f, glm::vec3(1,0,0)) *
+            glm::rotate(glm::mat4(1.0f), 100.0f, glm::vec3(1,0,0)) *
             //glm::rotate(glm::mat4(1.0f), 20.0f, glm::vec3(1,0,0)) *
             glm::scale(glm::mat4(1.0f), glm::vec3(3,3,3));
 

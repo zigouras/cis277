@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="MyGL" name="mygl"/>
+     <widget class="Character" name="mygl"/>
     </item>
    </layout>
   </widget>
@@ -26,7 +26,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>19</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -49,9 +49,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>MyGL</class>
+   <class>Character</class>
    <extends>QOpenGLWidget</extends>
-   <header>mygl.h</header>
+   <header>character.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

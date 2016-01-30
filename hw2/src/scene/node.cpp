@@ -1,11 +1,22 @@
 #include "node.h"
 
+glm::mat4 Node::getTransformation()
+{
+    return transformation;
+}
+
+void Node::setTransformation(glm::mat4 value)
+{
+    transformation = value;
+}
+
 Node::Node()
 {
     tx = ty = tz = rx = ry = rz = 0;
     sx = sy = sz = 1;
+    setTransformation(calculateTransformation());
     geom_color = glm::vec4(1,1,1,1);
-
+    setTransformation(calculateTransformation());
     parent = NULL;
     geometry = NULL;
 }
@@ -14,6 +25,7 @@ Node::Node(float tx, float ty, float tz, float rx, float ry, float rz, float sx,
     this->tx = tx; this->ty = ty; this->tz = tz;
     this->rx = rx; this->ry = ry; this->rz = rz;
     this->sx = sx; this->sy = sy; this->sz = sz;
+    setTransformation(calculateTransformation());
     geom_color = glm::vec4(1,1,1,1);
 
     parent = NULL;
@@ -61,7 +73,7 @@ const glm::vec4& Node::getGeometryColor() const {
     return geom_color;
 }
 
-glm::mat4 Node::getTransMat(){
+glm::mat4 Node::calculateTransformation(){
     glm::mat4 T = glm::translate(glm::mat4(1.0f), glm::vec3(tx, ty, tz));
     glm::mat4 Rx = glm::rotate(glm::mat4(1.0f), rx, glm::vec3(1, 0, 0));
     glm::mat4 Ry = glm::rotate(glm::mat4(1.0f), ry, glm::vec3(0, 1, 0));

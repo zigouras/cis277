@@ -2,7 +2,6 @@ INPUT(
 ./release\main.o
 ./release\mainwindow.o
 ./release\glwidget277.o
-./release\mygl.o
 ./release\shaderprogram.o
 ./release\utils.o
 ./release\cylinder.o
@@ -12,6 +11,9 @@ INPUT(
 ./release\node.o
 ./release\cube.o
 ./release\character.o
+./release\mygl.o
+./release\limb.o
+./release\scenegraphtraverseanddraw.o
 ./release\qrc_glsl.o
 ./release\moc_mainwindow.o
 ./release\moc_glwidget277.o

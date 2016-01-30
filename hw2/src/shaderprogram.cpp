@@ -26,8 +26,7 @@ void ShaderProgram::setModelMatrix(const glm::mat4 &model)
     }
 
     if (unifModelInvTr != -1) {
-        glm::mat4 modelinvtr = glm::transpose(model);
-        modelinvtr = glm::inverse(model);
+        glm::mat4 modelinvtr = glm::inverse(glm::transpose(model));
         prog.setUniformValue(unifModelInvTr, la::to_qmat(modelinvtr));
     }
 }

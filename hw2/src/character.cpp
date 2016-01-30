@@ -1,5 +1,6 @@
 #include "Character.h"
 #include <la.h>
+#include<scenegraphtraverseanddraw.h>
 
 #include <iostream>
 #include <QApplication>
@@ -16,8 +17,16 @@ Character::~Character()
     makeCurrent();
 
     vao.destroy();
-    //torso.destroy();
-    //head.destroy();
+    torso.destroy();
+    head.destroy();
+    rightUpperArm.destroy();
+    rightLowerArm.destroy();
+    leftUpperArm.destroy();
+    leftLowerArm.destroy();
+    rightUpperLeg.destroy();
+    rightLowerLeg.destroy();
+    leftUpperLeg.destroy();
+    leftLowerLeg.destroy();
 }
 
 void Character::initializeGL()
@@ -43,9 +52,18 @@ void Character::initializeGL()
     // Create a Vertex Attribute Object
     vao.create();
 
-    //Create the example cube
-//    geom_cube.setColor(glm::vec4(1,0,0,1));
-//    geom_cube.create();
+    //Create the body objects
+    torso.create();
+    head.create();
+    rightUpperArm.create();
+    rightLowerArm.create();
+    leftUpperArm.create();
+    leftLowerArm.create();
+    rightUpperLeg.create();
+    rightLowerLeg.create();
+    leftUpperLeg.create();
+    leftLowerLeg.create();
+
 
     // Create and set up the diffuse shader
     prog_lambert.create(":/glsl/lambert.vert.glsl", ":/glsl/lambert.frag.glsl");
@@ -89,29 +107,68 @@ void Character::paintGL()
     // Clear the screen so that we only see newly drawn images
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //VVV CLEAR THIS CODE WHEN YOU IMPLEMENT SCENE GRAPH TRAVERSAL VVV///////////////////
-#define TEMP//You can comment this line out to remove the example geometry from your scene
-#ifdef TEMP
-    //Create a model matrix. This one scales the sphere uniformly by 3, then translates it by <-2,0,0>.
-    //Note that we have to transpose the model matrix before passing it to the shader
-    //This is because OpenGL expects column-major matrices, but you've
-    //implemented row-major matrices.
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-2,0,0)) * glm::scale(glm::mat4(1.0f), glm::vec3(3,3,3));
+    initBody();
 
+    SceneGraphTraverseAndDraw* sceneGraphTraverseAndDraw =
+            new SceneGraphTraverseAndDraw(scene);
+    sceneGraphTraverseAndDraw->setGLWidget277(this);
+    sceneGraphTraverseAndDraw->setProgLambert(&prog_lambert);
+    sceneGraphTraverseAndDraw->render();
+}
 
-    //Now do the same to render the cube
-    //We've rotated it -45 degrees on the Z axis, then translated it to the point <2,2,0>
-    model = glm::translate(glm::mat4(1.0f), glm::vec3(2,2,0)) * glm::rotate(glm::mat4(1.0f), -45.0f, glm::vec3(0,0,1));
-    prog_lambert.setModelMatrix(model);
-    //geom_cube.setColor(glm::vec4(1,0,0,1));//Set its color to red
-    //prog_lambert.draw(*this, geom_cube);
+// this initializes the body geometry so each polygon is situated
+// in RELATION to it's parent
+// you can change any of the node variables to transform a body part
+void Character::initBody() {
+    // the root node is the torso
+    scene = new Node(0,1.6,0,0,-32,0,1.5,3,1.5);//float tx, float ty, float tz, float rx, float ry, float rz, float sx, float sy, float sz);
+    torso.setColor(glm::vec4(1,0,0,1));
+    scene->setGeometry(&torso);
 
-#endif
+    headNode = new Node(-0.5,0.5,-0.5,0,0,0,1,0.5,1);
+    head.setColor(glm::vec4(0,2,0,1));
+    headNode->setGeometry(&head);
+    scene->addChild(headNode);
 
+    leftUpperArmNode = new Node(1,0,0.2,0,0,60,0.3,1,0.3);
+    leftUpperArm.setColor(glm::vec4(0,0,1,1));
+    leftUpperArmNode->setGeometry(&leftUpperArm);
+    scene->addChild(leftUpperArmNode);
 
-    //^^^ CLEAR THIS CODE WHEN YOU IMPLEMENT SCENE GRAPH TRAVERSAL ^^^/////////////////
+    leftLowerArmNode  = new Node(0,-1,0,0,0,0,1,1,1);
+    leftLowerArm.setColor(glm::vec4(0,1,1,1));
+    leftLowerArmNode->setGeometry(&leftLowerArm);
+    leftUpperArmNode->addChild(leftLowerArmNode);
 
-    //Here is a good spot to call your scene graph traversal function.
+    rightUpperArmNode = new Node(-1,0,-0.2,0,0,-60,0.3,1,0.3);
+    rightUpperArm.setColor(glm::vec4(0,0,1,1));
+    rightUpperArmNode->setGeometry(&rightUpperArm);
+    scene->addChild(rightUpperArmNode);
+
+    rightLowerArmNode = new Node(0,-1,0,0,0,0,1,1,1);
+    rightLowerArm.setColor(glm::vec4(0,1,1,1));
+    rightLowerArmNode->setGeometry(&rightLowerArm);
+    rightUpperArmNode->addChild(rightLowerArmNode);
+
+    leftUpperLegNode = new Node(1,-1,0.2,0,0,50,0.5,1.5,0.5);
+    leftUpperLeg.setColor(glm::vec4(0,0,1,1));
+    leftUpperLegNode->setGeometry(&leftUpperLeg);
+    scene->addChild(leftUpperLegNode);
+
+    leftLowerLegNode  = new Node(0,-1,0,0,0,0,1,1,1);
+    leftLowerLeg.setColor(glm::vec4(0,1,1,1));
+    leftLowerLegNode->setGeometry(&leftLowerLeg);
+    leftUpperLegNode->addChild(leftLowerLegNode);
+
+    rightUpperLegNode = new Node(-1,-1,0.2,0,0,-50,0.5,1.5,0.5);
+    rightUpperLeg.setColor(glm::vec4(0,0,1,1));
+    rightUpperLegNode->setGeometry(&rightUpperLeg);
+    scene->addChild(rightUpperLegNode);
+
+    rightLowerLegNode  = new Node(0,-1,0,0,0,0,1,1,1);
+    rightLowerLeg.setColor(glm::vec4(0,1,1,1));
+    rightLowerLegNode->setGeometry(&rightLowerLeg);
+    rightUpperLegNode->addChild(rightLowerLegNode);
 }
 
 void Character::keyPressEvent(QKeyEvent *e)

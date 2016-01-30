@@ -19,7 +19,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QWidget>
-#include "mygl.h"
+#include "character.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -29,7 +29,7 @@ public:
     QAction *actionQuit;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
-    MyGL *mygl;
+    Character *mygl;
     QMenuBar *menuBar;
     QMenu *menuFile;
 
@@ -46,7 +46,7 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        mygl = new MyGL(centralWidget);
+        mygl = new Character(centralWidget);
         mygl->setObjectName(QStringLiteral("mygl"));
 
         gridLayout->addWidget(mygl, 0, 0, 1, 1);
@@ -54,7 +54,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 640, 19));
+        menuBar->setGeometry(QRect(0, 0, 640, 26));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         MainWindow->setMenuBar(menuBar);

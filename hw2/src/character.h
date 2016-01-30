@@ -5,6 +5,8 @@
 #include <utils.h>
 #include <shaderprogram.h>
 #include <scene/node.h>
+#include <scene/cube.h>
+#include <scene/cylinder.h>
 
 
 #include <QOpenGLVertexArrayObject>
@@ -17,7 +19,30 @@ class Character
 private:
     QOpenGLVertexArrayObject vao;
 
-    Node body;
+    Node* scene;
+    Cylinder torso;
+
+    Cube head;
+    Cylinder rightUpperArm;
+    Cylinder rightLowerArm;
+    Cylinder leftUpperArm;
+    Cylinder leftLowerArm;
+
+    Cylinder rightUpperLeg;
+    Cylinder rightLowerLeg;
+    Cylinder leftUpperLeg;
+    Cylinder leftLowerLeg;
+
+    Node* headNode;
+    Node* rightUpperArmNode;
+    Node* rightLowerArmNode;
+    Node* leftUpperArmNode;
+    Node* leftLowerArmNode;
+
+    Node* rightUpperLegNode;
+    Node* rightLowerLegNode;
+    Node* leftUpperLegNode;
+    Node* leftLowerLegNode;
 
     ShaderProgram prog_lambert;
     ShaderProgram prog_wire;
